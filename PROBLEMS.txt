@@ -1,0 +1,30 @@
+1. Role not being detected
+this solved the problem
+private OAuth2UserService<OidcUserRequest, OidcUser> oauth2UserService() {
+
+        final OidcUserService delegate = new OidcUserService();
+
+        return (userRequest) -> {
+            OidcUser oidcUser = delegate.loadUser((OidcUserRequest) userRequest);
+
+            String email = oidcUser.getAttribute("email");
+            System.out.println("Authenticated person email: " + email);
+            Person person = customOAuth2UserService.userRepository.findByEmail(email)
+                    .orElseThrow(() -> new UsernameNotFoundException("Person not found with email: " + email));
+
+            System.out.println("Person roles from database: " + person.getRole());
+
+            // Map person roles to authorities
+            var authorities = Collections.singleton(
+                    new SimpleGrantedAuthority(person.getRole().toUpperCase())
+            );
+            System.out.println("Mapped authority: " + authorities);
+
+            OAuth2AccessToken accessToken = userRequest.getAccessToken();
+
+
+            oidcUser = new DefaultOidcUser(authorities, oidcUser.getIdToken(), oidcUser.getUserInfo());
+
+            return oidcUser;
+        };
+    }

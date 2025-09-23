@@ -1,0 +1,40 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org">
+<head>
+    <title>Create Request</title>
+</head>
+<body>
+    <h2>Create a New Request</h2>
+    <form action="#" th:action="@{/requests}" th:object="${request}" method="post">
+        <!-- Time input -->
+        <label for="time">Time:</label>
+        <input type="time" id="time" th:field="*{time}" required>
+        
+        <!-- Status input -->
+        <label for="status">Status:</label>
+        <input type="text" id="status" th:field="*{status}" required>
+        
+        <!-- Day input -->
+        <label for="day">Day:</label>
+        <input type="text" id="day" th:field="*{day}" required>
+        
+        <!-- Semester Dropdown -->
+        <label for="semester">Semester:</label>
+        <select id="semester" th:field="*{semester.semesterId}" required>
+            <option th:each="semester : ${semesters}" 
+                    th:value="${semester.semesterId}" 
+                    th:text="${semester.semesterName}">Semester</option>
+        </select>
+        
+        <!-- Module Dropdown -->
+        <label for="module">Module:</label>
+        <select id="module" th:field="*{module.moduleId}" required>
+            <option th:each="module : ${modules}" 
+                    th:value="${module.moduleId}" 
+                    th:text="${module.moduleName}">Module</option>
+        </select>
+        
+        <button type="submit">Submit</button>
+    </form>
+</body>
+</html>
