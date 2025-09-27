@@ -69,7 +69,7 @@ src/
 ▶️ Steps to Run the Project
 
 # 1. Clone the repository
-git clone https://github.com/chorfichaymaa101/Gestions-des-emplois-du-temps-ENSA-BackEnd.git
+git clone https://github.com/chorfichaymaa101/university-schedule-backend.git
 cd Gestions-des-emplois-du-temps-ENSA-BackEnd
 
 # 2. Configure the database in application.yml
